@@ -66,3 +66,6 @@ you will likely not be charged for a small test project. But be safe and set a b
  - Add your firebase `project_id` to `.firebaserc`
  - Run `yarn deploy`
  - Enjoy.
+
+## Contribute
+Any contributions/issues/enhancements/comments welcome - create an issue or pull request.
