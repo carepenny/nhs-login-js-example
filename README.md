@@ -1,5 +1,4 @@
-# A Javascript implementation of NHS Login
-## (JS front to back 👌)
+# A Javascript implementation of NHS Login 👌
 This repo contains a sample application demonstrating how to connect to NHS login using Node JS.
 It contains a simple web frontend using Vue.js for interactivity that connects to an Express.js
 backend API. The repo has been set up for easy local development and testing, and deployment to Firebase.
