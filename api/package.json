@@ -1,0 +1,31 @@
+{
+  "engines": {
+    "node": "10"
+  },
+  "name": "api",
+  "version": "0.0.1",
+  "description": "Javascript implementation of NHS Login - API Service",
+  "author": "Carepenny (Jamie Curnow)",
+  "license": "MIT",
+  "scripts": {
+    "dev": "NODE_ENV=dev nodemon -r esm ./dev.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
+    "firebase-admin": "^8.6.0",
+    "firebase-functions": "^3.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^1.6.0",
+    "query-string": "^6.8.3",
+    "uuidv4": "^5.0.1"
+  },
+  "devDependencies": {
+    "esm": "^3.2.25",
+    "nodemon": "^1.19.2"
+  }
+}

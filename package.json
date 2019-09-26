@@ -1,0 +1,18 @@
+{
+  "name": "nhs-login-js-example",
+  "version": "0.0.1",
+  "description": "Javascript implementation of NHS Login",
+  "author": "Carepenny (Jamie Curnow)",
+  "license": "MIT",
+  "scripts": {
+    "setup": "yarn install:front-end & yarn install:api",
+    "install:front-end": "cd front-end && yarn",
+    "install:api": "cd api && yarn",
+    "dev": "yarn dev:front-end & yarn dev:api",
+    "dev:front-end": "cd front-end && yarn dev",
+    "dev:api": "cd api && yarn dev",
+    "deploy:front-end": "firebase deploy --only hosting",
+    "deploy:api": "firebase deploy --only functions",
+    "deploy": "firebase deploy"
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="config.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <main>
+    <div id="app" class="content-wrap nhs-blue-background">
+      <div v-cloak class="row justify-center pa">
+        <transition name="fade" appear>
+          <div class="col justify-center shrink card pa min-500">
+            <div class="row justify-center">
+              <div class="col col-12 text-center">
+                <h1>NHS Login Test</h1>
+              </div>
+              <div class="col col-12 mb">
+                <p>This is an implementation of NHS login using the NHS login sandbox.</p>
+                <p>Use the following credentials to sign into the sandbox (note them before clicking login):</p>
+                <p>
+                  <span class="strong">Email: </span>testuserlive@demo.signin.nhs.uk<br />
+                  <span class="strong">Password: </span>Passw0rd$1<br />
+                  <span class="strong">OTP Code: </span>190696<br />
+                </p>
+                <a href="https://github.com">See the github repo for details.</a>
+              </div>
+              <div class="col col-12 text-center">
+                <button @click="getAuthCode" type="button" id="log-in-button" class="mt" :class="{progress: loggingIn}">
+                  <img id="nhs-login-img" src="img/LogInWith_Original.svg"></img>
+                </button>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </div>
+  </main>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "front-end",
+  "version": "1.0.0",
+  "description": "Javascript implementation of NHS Login - API Service",
+  "author": "Carepenny (Jamie Curnow)",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd src && browser-sync start -s --port 3000 --watch"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}

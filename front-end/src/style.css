@@ -1,0 +1,181 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Verdana', sans-serif;
+}
+h1, h2, h3, h4, h5 {
+  margin: 0;
+}
+h1, h2 {
+  font-weight: 500;
+}
+h3, h4, h5 {
+  font-weight: 600;
+}
+button {
+  background-color: #005DB8;
+  border-radius: 4px;
+  border: 3px solid #005DB8;
+  border-bottom-color: #003087;
+  font-size: 20px;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+button:focus {
+  outline: 0px;
+}
+hr {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  margin: 30px 0px;
+}
+
+[v-cloak] { opacity: 0!important; }
+
+.strong {
+  font-weight: 600;
+}
+
+.content-wrap {
+  opacity: 1;
+  flex: 1 1 auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 100%;
+  position: relative;
+  transition: opacity 2s ease-in-out;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 1 auto;
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.justify-center {
+  justify-content: center!important;
+}
+
+.text-center {
+  text-align: center!important;
+}
+
+.shrink {
+  flex-shrink: 1!important;
+  flex-grow: 0!important;
+}
+
+.card {
+  background-color: #fff;
+  color: rgba(0,0,0,.87);
+  border-color: #fff;
+  border-radius: 4px;
+  max-width: 100%;
+  outline: none;
+  text-decoration: none;
+  word-wrap: break-word;
+  position: relative;
+  white-space: normal;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.mt {
+  margin-top: 20px;
+}
+.mb {
+  margin-bottom: 20px;
+}
+.ml {
+  margin-left: 20px;
+}
+.mr {
+  margin-right: 20px;
+}
+.ma {
+  margin: 20px;
+}
+.pt {
+  padding-top: 20px;
+}
+.pb {
+  padding-bottom: 20px;
+}
+.pl {
+  padding-left: 20px;
+}
+.pr {
+  padding-right: 20px;
+}
+.pa {
+  padding: 20px;
+}
+
+.nhs-blue-background {
+  background-color: #005db8
+}
+
+.code {
+  font-family: "Courrier", monospace;
+  max-width: 90%;
+  background-color: #2b2b2b;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  white-space: pre-wrap!important;
+}
+
+.progress{
+  opacity: 0.6;
+  cursor: default;
+}
+
+#log-in-button {
+  height: 70px;
+  width: auto;
+  border: none;
+  background-color: white;
+  padding: 0;
+  cursor: pointer;
+}
+#nhs-login-img {
+  height: 70px;
+  width: auto;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 200ms;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+@media only screen and (max-width: 500px) {
+  #log-in-button {
+    height: 50px;
+    width: auto;
+    border: none;
+    background-color: white;
+    padding: 0;
+    cursor: pointer;
+  }
+  #nhs-login-img {
+    height: 50px;
+    width: auto;
+  }
+}

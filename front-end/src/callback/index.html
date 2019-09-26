@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.polyfill.io/v3/polyfill.min.js"></script>
+  <script src="../config.js"></script>
+  <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+  <div id="app" class="content-wrap nhs-blue-background">
+    <div v-cloak class="row justify-center pa ma">
+      <transition name="fade" appear>
+        <div class="col justify-center card pa">
+          <div class="row justify-center">
+            <div class="col col-12 mb">
+              <h1>NHS Login Test - auth code callback</h1>
+              <p>
+                This is the callback page that NHS redirects to after successfull login. The auth code
+                that is used to call the api and obtain a JWT is in the query params as 'code'. This is
+                stipulated by NHS login. Any errors will also be sent in the query params.
+              </p>
+            </div>
+            <div v-if="authCode" class="col col-12 text-center mb">
+              <p>Here is the auth code returned by NHS login:</p>
+              <p>
+                <span class="strong">{{ authCode }}</span>
+              </p>
+            </div>
+            <div v-if="!authCode" class="col col-12 text-center mb">
+              <p>
+                <span class="strong">No 'code' was found in URL query params.</span><br />
+                Check your URL query params for any errors.<br />
+                <a href="/">Go back to the start and try again</a>
+              </p>
+            </div>
+            <div v-if="authCode" class="col col-12 text-center">
+              <button
+                :class="{ progress: gettingToken || tokenData }"
+                type="button"
+                @click="!gettingToken && !tokenData ? getToken() : ''"
+              >
+                Get a JWT from the API
+              </button>
+            </div>
+            <div v-if="error" class="col col-12 mt">
+              <h3 class="mt">Error:</h3>
+              <p v-if="error" class="code">{{ stringify(error) }}</p>
+              <a href="/">Go back to the start and try again</a>
+            </div>
+            <div v-if="tokenData" class="col col-12">
+              <hr />
+              <h3>JWT:</h3>
+              <p class="code">{{ idToken }}</p>
+              <button
+                :class="{ progress: gettingUserInfo }"
+                class="mt mb"
+                type="button"
+                @click="!gettingUserInfo ? getUserInfo() : ''"
+              >
+                Get User Info from the userinfo endpoint
+              </button>
+              <div v-if="userInfoData" class="mr ml mb pr pl pb">
+                <hr />
+                <h3>Userinfo response:</h3>
+                <p class="code">{{ stringify(userInfoData) }}</p>
+                <hr />
+              </div>
+
+              <h3>Refresh Token:</h3>
+              <p class="code">{{ stringify(refreshToken) }}</p>
+              <button
+                :class="{ progress: gettingRefreshToken }"
+                class="mt mb"
+                type="button"
+                @click="!gettingRefreshToken ? getRefreshToken() : ''"
+              >
+                Get a new JWT using the refresh token
+              </button>
+              <div v-if="refreshData" class="mr ml mb pr pl pb">
+                <hr />
+                <h3>Refresh Token Response:</h3>
+                <p class="code">{{ stringify(refreshData) }}</p>
+                <hr />
+              </div>
+
+              <h3>Decoded Token Payload:</h3>
+              <p class="code">{{ stringify(decodedPayload) }}</p>
+              <div class="ma pa"></div>
+
+              <h3>Decoded Token:</h3>
+              <p class="code">{{ stringify(decodedToken) }}</p>
+              <div class="ma pa"></div>
+
+              <h3 class="mt">Whole response:</h3>
+              <p class="code">{{ stringify(tokenData) }}</p>
+              <div class="ma pa"></div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="index.js"></script>
+</body>
+
+</html>
