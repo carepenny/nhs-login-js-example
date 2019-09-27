@@ -4,9 +4,9 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
-const uuid = require('uuidv4').default
-const fs = require('fs')
 const querystring = require('query-string')
+const createAndSignBearerToken = require('./utils/createAndSignBearerToken')
+const validateToken = require('./utils/validateToken')
 
 // Import the config file
 const config = require('./config.js')
@@ -23,28 +23,17 @@ app.use(bodyParser.json())
 // use cors and allow everything
 app.use(cors())
 
-const createAndSignBearerToken = () => {
-  // Read the private key
-  const privateKey = fs.readFileSync(config.privateKeyFilePath)
-  // Set the payload for the bearer-token to be sent to the /token nhs-login endpoint
-  // note that the 'exp' key is ommitted here in favour of 'expiresIn' in jwt.sign() below
-  const tokenPayload = {
-    sub: config.clientId,
-    iss: config.clientId,
-    aud: `${config.nhsRootDomain}/token`,
-    jti: uuid() // new unique id
-  }
-  // return the signed token
-  return jwt.sign(tokenPayload, privateKey, { algorithm: 'RS512', expiresIn: 60 })
-}
-
 // Token endpoint for obtaining a JWT using an authorisation code
 app.post(config.tokenEndpoint, async (req, res) => {
   try {
     // get the authorisation code from the post body
     const { code, redirectUri } = req.body
     // create a signed bearer token
-    const signedBearerToken = createAndSignBearerToken()
+    const signedBearerToken = createAndSignBearerToken({
+      clientId: config.clientId,
+      audience: `${config.nhsRootDomain}/token`,
+      privateKeyFilePath: config.privateKeyFilePath
+    })
     // create the formData to be sent to to the /token nhs-login endpoint
     const formData = {
       code,
@@ -62,8 +51,10 @@ app.post(config.tokenEndpoint, async (req, res) => {
     const { id_token } = response.data
     // decode the token
     const decodedToken = jwt.decode(id_token, { complete: true })
+    // Validate the token
+    const isValid = Boolean(validateToken(id_token))
     // send the whole response and the decoded token back to the front-end
-    return res.status(200).send({ tokenResponse: response.data, decodedToken })
+    return res.status(200).send({ isValid, tokenResponse: response.data, decodedToken })
   } catch (e) {
     // handle errors
     const errMessage = (e.response && e.response.data) || e.message || e
@@ -78,7 +69,11 @@ app.post(config.refreshEndpoint, async (req, res) => {
     // get the authorisation code from the post body
     const { token, redirectUri } = req.body
     // create a signed bearer token
-    const signedBearerToken = createAndSignBearerToken()
+    const signedBearerToken = createAndSignBearerToken({
+      clientId: config.clientId,
+      audience: `${config.nhsRootDomain}/token`,
+      privateKeyFilePath: config.privateKeyFilePath
+    })
     // create the formData to be sent to to the /token nhs-login endpoint
     const formData = {
       // the authorization code returned from the authorization endpoint sent with request
@@ -98,8 +93,10 @@ app.post(config.refreshEndpoint, async (req, res) => {
     const { access_token } = response.data
     // decode the token
     const decodedToken = jwt.decode(access_token, { complete: true })
+    // Validate the token
+    const isValid = Boolean(validateToken(access_token))
     // send the whole response and the decoded token back to the front-end
-    return res.status(200).send({ tokenResponse: response.data, decodedToken })
+    return res.status(200).send({ isValid, tokenResponse: response.data, decodedToken })
   } catch (e) {
     // handle errors
     const errMessage = (e.response && e.response.data) || e.message || e
@@ -110,14 +107,22 @@ app.post(config.refreshEndpoint, async (req, res) => {
 
 app.post(config.userinfoEndpoint, async (req, res) => {
   try {
-    // get the authorisation code from the post body
+    // get the accessToken code from the post body
     const { accessToken } = req.body
+    // Validate the token
+    const isValid = Boolean(validateToken(accessToken))
+    // Throw if not valid
+    if (!isValid) {
+      throw new Error('Access Token is invalid')
+    } else {
+      console.log('Access Token is valid')
+    }
     // get the data from the nhs userinfo endpoint
     const { data } = await axios({
       url: config.nhsRootDomain + '/userinfo',
       method: 'get',
       headers: {
-        'Authorization': `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
     // send the whole response back to the front-end
